@@ -24,6 +24,17 @@ mqtt:
       payload_not_available: "offline"
       icon: "mdi:water-pump"
 
+    - name: "Pool Heating System Power"
+      unique_id: pool_heating_system_power
+      state_topic: "pool/heating/system_mode"
+      command_topic: "pool/heating/set_system_mode"
+      payload_on: "ON"
+      payload_off: "OFF"
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:power-socket-uk"
+
   number:
     - name: "Pool Pump Flow Rate"
       unique_id: pool_pump_flow_rate_input
@@ -48,7 +59,7 @@ mqtt:
       max: 90
       step: 0.5
       unit_of_measurement: "°C"
-      mode: box
+      mode: slider
       availability_topic: "pool/status"
       payload_available: "online"
       payload_not_available: "offline"
@@ -63,7 +74,7 @@ mqtt:
       max: 10
       step: 0.5
       unit_of_measurement: "min"
-      mode: box
+      mode: slider
       availability_topic: "pool/status"
       payload_available: "online"
       payload_not_available: "offline"
@@ -78,7 +89,7 @@ mqtt:
       max: 100
       step: 0.5
       unit_of_measurement: "min"
-      mode: box
+      mode: slider
       availability_topic: "pool/status"
       payload_available: "online"
       payload_not_available: "offline"
@@ -93,7 +104,7 @@ mqtt:
       max: 100
       step: 0.5
       unit_of_measurement: "min"
-      mode: box
+      mode: slider
       availability_topic: "pool/status"
       payload_available: "online"
       payload_not_available: "offline"
@@ -108,7 +119,7 @@ mqtt:
       max: 100
       step: 0.5
       unit_of_measurement: "°C"
-      mode: box
+      mode: slider
       availability_topic: "pool/status"
       payload_available: "online"
       payload_not_available: "offline"
@@ -123,7 +134,7 @@ mqtt:
       max: 100
       step: 0.5
       unit_of_measurement: "°C"
-      mode: box
+      mode: slider
       availability_topic: "pool/status"
       payload_available: "online"
       payload_not_available: "offline"

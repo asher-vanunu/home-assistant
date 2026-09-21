@@ -2,29 +2,28 @@ type: vertical-stack
 cards:
   - type: thermostat
     entity: climate.khymvm_svlry
-    name: ☀️ חימום סולארי בריכה
+    name: ☀️ חימום בריכה סולארי
     features:
       - type: climate-hvac-modes
         hvac_modes:
           - 'off'
           - heat
           - auto
-          - shutdown
   - type: entities
     title: נתוני חיישנים
     show_header_toggle: false
     entities:
       - entity: sensor.collector_temperature
-        name: טמפרטורת קולט (tCOL)
+        name: טמפרטורת קולט
         icon: mdi:solar-power
       - entity: sensor.storage_temperature
-        name: טמפרטורת בריכה (tST)
+        name: טמפרטורת בריכה
         icon: mdi:pool
       - entity: sensor.flow_temperature
-        name: טמפרטורת זרימה (tFLW)
+        name: טמפרטורת זרימה
         icon: mdi:pipe-valve
   - type: entities
-    title: 'פרמטרים:'
+    title: 'הגדרות מתקדמות:'
     show_header_toggle: false
     entities:
       - entity: number.solar_tdel
@@ -38,7 +37,7 @@ cards:
       - entity: number.solar_dt_f
         name: DT_F (Switch OFF temp diff)
       - type: button
-        name: שמור הגדרות ב-EEPROM
+        name: שמור הגדרות
         icon: mdi:content-save-cog
         tap_action:
           action: call-service
