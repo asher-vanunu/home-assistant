@@ -1,0 +1,229 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+mqtt:
+  # --- Pump Controls & Sensors ---
+  switch:
+    - name: "Pool Pump Power"
+      unique_id: pool_pump_power_switch
+      state_topic: "pool/pump/state"
+      command_topic: "pool/pump/set_state"
+      payload_on: "ON"
+      payload_off: "OFF"
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:water-pump"
+
+  number:
+    - name: "Pool Pump Flow Rate"
+      unique_id: pool_pump_flow_rate_input
+      state_topic: "pool/pump/flow_m3h"
+      command_topic: "pool/pump/set_flow"
+      min: 8
+      max: 25
+      step: 1
+      unit_of_measurement: "m³/h"
+      mode: slider
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:speedometer"
+
+    # Target temp (sMAX) for solar controller
+    - name: "Solar Target Temp (sMAX)"
+      unique_id: pool_heating_smax_input
+      state_topic: "pool/heating/sMAX"
+      command_topic: "pool/heating/set_smax"
+      min: 20
+      max: 90
+      step: 0.5
+      unit_of_measurement: "°C"
+      mode: box
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:thermometer-cog"
+
+    # tDEL - delay time before checking (minutes)
+    - name: "Solar tDEL"
+      unique_id: pool_heating_tdel_input
+      state_topic: "pool/heating/tDEL"
+      command_topic: "pool/heating/set_tdel"
+      min: 0
+      max: 10
+      step: 0.5
+      unit_of_measurement: "min"
+      mode: box
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:timer-sand"
+
+    # tON - minimum pump ON time (minutes)
+    - name: "Solar tON"
+      unique_id: pool_heating_ton_input
+      state_topic: "pool/heating/tON"
+      command_topic: "pool/heating/set_ton"
+      min: 1
+      max: 100
+      step: 0.5
+      unit_of_measurement: "min"
+      mode: box
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:timer-play-outline"
+
+    # tOFF - minimum pump OFF time (minutes)
+    - name: "Solar tOFF"
+      unique_id: pool_heating_toff_input
+      state_topic: "pool/heating/tOFF"
+      command_topic: "pool/heating/set_toff"
+      min: 1
+      max: 100
+      step: 0.5
+      unit_of_measurement: "min"
+      mode: box
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:timer-stop-outline"
+
+    # DT_O - temperature diff to switch ON (°C)
+    - name: "Solar DT_O"
+      unique_id: pool_heating_dto_input
+      state_topic: "pool/heating/DT_O"
+      command_topic: "pool/heating/set_dto"
+      min: 0
+      max: 100
+      step: 0.5
+      unit_of_measurement: "°C"
+      mode: box
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:delta"
+
+    # DT_F - temperature diff to switch OFF (°C)
+    - name: "Solar DT_F"
+      unique_id: pool_heating_dtf_input
+      state_topic: "pool/heating/DT_F"
+      command_topic: "pool/heating/set_dtf"
+      min: 0
+      max: 100
+      step: 0.5
+      unit_of_measurement: "°C"
+      mode: box
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:delta"
+
+  select:
+    - name: "Solar Controller Mode"
+      unique_id: pool_heating_mode_select
+      command_topic: "pool/heating/set_mode"
+      state_topic: "pool/heating/mode"
+      options:
+        - "AUTO"
+        - "MAN_ON"
+        - "MAN_OFF"
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:tune"
+
+  sensor:
+    - name: "Pool Pump Power Consumption"
+      unique_id: pool_pump_power_watts
+      state_topic: "pool/pump/power_watts"
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+
+    - name: "Collector Temperature"
+      unique_id: pool_heating_tcol
+      state_topic: "pool/heating/tCOL"
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:solar-power"
+
+    - name: "Storage Temperature"
+      unique_id: pool_heating_tst
+      state_topic: "pool/heating/tST"
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:water-thermometer"
+
+    - name: "Flow Temperature"
+      unique_id: pool_heating_tflw
+      state_topic: "pool/heating/tFLW"
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:pipe-valve"
+
+climate:
+  - platform: climate_template
+    name: "חימום סולארי"
+    unique_id: pool_solar_heater
+    min_temp: 20
+    max_temp: 40
+    current_temperature_template: "{{ states('sensor.storage_temperature') | float(0) }}"
+    target_temperature_template: "{{ states('number.solar_target_temp_smax') | float(30) }}"
+    modes:
+      - "off"
+      - "heat"
+      - "auto"
+    hvac_mode_template: >
+      {% set mode = states('select.solar_controller_mode') %}
+      {% if mode == 'MAN_ON' %}
+        heat
+      {% elif mode == 'MAN_OFF' %}
+        off
+      {% else %}
+        auto
+      {% endif %}
+    set_temperature:
+      - service: number.set_value
+        target:
+          entity_id: number.solar_target_temp_smax
+        data:
+          value: "{{ temperature }}"
+    set_hvac_mode:
+      - service: select.select_option
+        target:
+          entity_id: select.solar_controller_mode
+        data:
+          option: >
+            {% if hvac_mode == 'heat' %}
+              MAN_ON
+            {% elif hvac_mode == 'off' %}
+              MAN_OFF
+            {% else %}
+              AUTO
+            {% endif %}

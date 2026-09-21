@@ -1,0 +1,38 @@
+type: vertical-stack
+cards:
+  - type: thermostat
+    entity: climate.khymvm_svlry
+    name: ☀️ חימום סולארי בריכה
+    features:
+      - type: climate-hvac-modes
+        hvac_modes:
+          - 'off'
+          - heat
+          - auto
+  - type: entities
+    title: נתוני חיישנים
+    show_header_toggle: false
+    entities:
+      - entity: sensor.collector_temperature
+        name: טמפרטורת קולט (tCOL)
+        icon: mdi:solar-power
+      - entity: sensor.storage_temperature
+        name: טמפרטורת בריכה (tST)
+        icon: mdi:pool
+      - entity: sensor.flow_temperature
+        name: טמפרטורת זרימה (tFLW)
+        icon: mdi:pipe-valve
+  - type: entities
+    title: 'פרמטרים:'
+    show_header_toggle: false
+    entities:
+      - entity: number.solar_tdel
+        name: tDEL
+      - entity: number.solar_ton
+        name: tON
+      - entity: number.solar_toff
+        name: tOFF
+      - entity: number.solar_dt_o
+        name: DT_O (Switch ON temp diff)
+      - entity: number.solar_dt_f
+        name: DT_F (Switch OFF temp diff)
