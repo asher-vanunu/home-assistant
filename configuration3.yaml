@@ -129,6 +129,16 @@ mqtt:
       payload_not_available: "offline"
       icon: "mdi:delta"
 
+  button:
+    - name: "Pool Heater Save Config"
+      unique_id: pool_heater_save_config
+      command_topic: "pool/heating/save"
+      payload_press: "SAVE"
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:content-save-cog"
+
   select:
     - name: "Solar Controller Mode"
       unique_id: pool_heating_mode_select
@@ -199,6 +209,7 @@ climate:
       - "off"
       - "heat"
       - "auto"
+      - "shutdown"
     hvac_mode_template: >
       {% set mode = states('select.solar_controller_mode') %}
       {% if mode == 'MAN_ON' %}

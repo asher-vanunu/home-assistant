@@ -9,6 +9,7 @@ cards:
           - 'off'
           - heat
           - auto
+          - shutdown
   - type: entities
     title: נתוני חיישנים
     show_header_toggle: false
@@ -36,3 +37,11 @@ cards:
         name: DT_O (Switch ON temp diff)
       - entity: number.solar_dt_f
         name: DT_F (Switch OFF temp diff)
+      - type: button
+        name: שמור הגדרות ב-EEPROM
+        icon: mdi:content-save-cog
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            entity_id: button.pool_heater_save_config
