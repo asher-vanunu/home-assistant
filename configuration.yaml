@@ -1,4 +1,3 @@
-
 # Loads default set of integrations. Do not remove.
 default_config:
 
@@ -56,7 +55,7 @@ mqtt:
       state_topic: "pool/heating/sMAX"
       command_topic: "pool/heating/set_smax"
       min: 20
-      max: 90
+      max: 50
       step: 0.5
       unit_of_measurement: "°C"
       mode: slider
@@ -86,7 +85,7 @@ mqtt:
       state_topic: "pool/heating/tON"
       command_topic: "pool/heating/set_ton"
       min: 1
-      max: 100
+      max: 50
       step: 0.5
       unit_of_measurement: "min"
       mode: slider
@@ -101,7 +100,7 @@ mqtt:
       state_topic: "pool/heating/tOFF"
       command_topic: "pool/heating/set_toff"
       min: 1
-      max: 100
+      max: 50
       step: 0.5
       unit_of_measurement: "min"
       mode: slider
@@ -116,7 +115,7 @@ mqtt:
       state_topic: "pool/heating/DT_O"
       command_topic: "pool/heating/set_dto"
       min: 0
-      max: 100
+      max: 50
       step: 0.5
       unit_of_measurement: "°C"
       mode: slider
@@ -131,7 +130,7 @@ mqtt:
       state_topic: "pool/heating/DT_F"
       command_topic: "pool/heating/set_dtf"
       min: 0
-      max: 100
+      max: 50
       step: 0.5
       unit_of_measurement: "°C"
       mode: slider
@@ -149,6 +148,34 @@ mqtt:
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:content-save-cog"
+
+    - name: "Pool Heater Reset Defaults"
+      unique_id: pool_heater_reset_defaults
+      command_topic: "pool/heating/reset_default"
+      payload_press: "RESET"
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:restore"
+
+    - name: "Pool Arduino Nano Reset"
+      unique_id: pool_nano_reset_btn
+      command_topic: "pool/control/nano_reset/set"
+      payload_press: "PRESS"
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:restart"
+
+    - name: "Pool ESP32 Reboot"
+      unique_id: pool_esp32_reboot_btn
+      command_topic: "pool/control/esp_reset/set"
+      payload_press: "PRESS"
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:restart"
+      entity_category: "config"
 
   select:
     - name: "Solar Controller Mode"

@@ -39,8 +39,20 @@ cards:
       - type: button
         name: שמור הגדרות
         icon: mdi:content-save-cog
+        action_name: שמור
         tap_action:
           action: call-service
           service: button.press
           target:
             entity_id: button.pool_heater_save_config
+      - type: button
+        name: איפוס להגדרות יצרן
+        icon: mdi:restore
+        action_name: אפס
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            entity_id: button.pool_heater_reset_defaults
+          confirmation:
+            text: האם למחוק את הזיכרון ולאפס את כל ההגדרות לברירת מחדל?
