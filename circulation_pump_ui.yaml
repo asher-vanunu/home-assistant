@@ -1,0 +1,33 @@
+type: entities
+title: 🔄 משאבת סחרור
+show_header_toggle: false
+entities:
+  - entity: switch.pool_pump_power
+    name: הפעלה
+    icon: mdi:water-pump
+  - entity: switch.pool_pump_modbus_control
+    name: שליטת RS485
+    icon: mdi:sync-circle
+  - entity: select.pool_pump_mode
+    name: מצב עבודה
+    icon: mdi:tune
+  - entity: number.pool_pump_flow_rate
+    name: כיוונון ספיקה (Flow)
+    icon: mdi:waves
+  - entity: number.pool_pump_speed_capacity
+    name: כיוונון מהירות (Capacity)
+    icon: mdi:speedometer
+  - type: section
+    label: נתוני משאבה
+  - entity: sensor.pool_pump_capacity_sensor
+    name: מהירות (קיבולת)
+    icon: mdi:gauge
+  - entity: sensor.pool_pump_power_consumption
+    name: הספק
+    icon: mdi:flash
+  - entity: sensor.pool_pump_flow_rate_sensor
+    name: ספיקה
+    icon: mdi:waves
+  - entity: sensor.pool_pump_energy
+    name: אנרגיה
+    icon: mdi:counter

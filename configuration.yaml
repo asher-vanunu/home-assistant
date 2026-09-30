@@ -23,6 +23,19 @@ mqtt:
       payload_not_available: "offline"
       icon: "mdi:water-pump"
 
+    # --- מתג ניתוק Modbus מוגדר כמתג רגיל ---
+    - name: "Pool Pump Modbus Control"
+      unique_id: pool_pump_modbus_control_switch
+      state_topic: "pool/pump/modbus_link_state"
+      command_topic: "pool/pump/set_modbus_link"
+      payload_on: "ON"
+      payload_off: "OFF"
+      device_class: switch
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:power-plug"
+
     - name: "Pool Heating System Power"
       unique_id: pool_heating_system_power
       state_topic: "pool/heating/system_mode"
@@ -37,12 +50,12 @@ mqtt:
   number:
     - name: "Pool Pump Flow Rate"
       unique_id: pool_pump_flow_rate_input
-      state_topic: "pool/pump/flow_m3h"
       command_topic: "pool/pump/set_flow"
-      min: 8
-      max: 25
-      step: 1
-      unit_of_measurement: "m³/h"
+      optimistic: true
+      min: 30
+      max: 100
+      step: 5
+      unit_of_measurement: "%"
       mode: slider
       availability_topic: "pool/status"
       payload_available: "online"
@@ -201,6 +214,26 @@ mqtt:
       availability_topic: "pool/status"
       payload_available: "online"
       payload_not_available: "offline"
+
+    - name: "Pool Pump Flow Rate Sensor"
+      unique_id: pool_pump_flow_rate_sensor
+      state_topic: "pool/pump/flow_m3h"
+      unit_of_measurement: "m³/h"
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:waves"
+
+    - name: "Pool Pump Energy"
+      unique_id: pool_pump_energy
+      state_topic: "pool/pump/energy_kwh"
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:counter"
 
     - name: "Collector Temperature"
       unique_id: pool_heating_tcol
