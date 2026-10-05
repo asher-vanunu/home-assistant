@@ -23,7 +23,7 @@ cards:
         name: טמפרטורת זרימה
         icon: mdi:pipe-valve
   - type: entities
-    title: 'הגדרות מתקדמות:'
+    title: הגדרות מתקדמות
     show_header_toggle: false
     entities:
       - entity: number.solar_tdel

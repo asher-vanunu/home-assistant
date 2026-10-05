@@ -10,7 +10,6 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 
 mqtt:
-  # --- Pump Controls & Sensors ---
   switch:
     - name: "Pool Pump Power"
       unique_id: pool_pump_power_switch
@@ -23,7 +22,6 @@ mqtt:
       payload_not_available: "offline"
       icon: "mdi:water-pump"
 
-    # --- מתג ניתוק Modbus מוגדר כמתג רגיל ---
     - name: "Pool Pump Modbus Control"
       unique_id: pool_pump_modbus_control_switch
       state_topic: "pool/pump/modbus_link_state"
@@ -50,10 +48,24 @@ mqtt:
   number:
     - name: "Pool Pump Flow Rate"
       unique_id: pool_pump_flow_rate_input
+      state_topic: "pool/pump/flow_m3h"
       command_topic: "pool/pump/set_flow"
-      optimistic: true
+      min: 8
+      max: 25
+      step: 1
+      unit_of_measurement: "m³/h"
+      mode: slider
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:waves"
+
+    - name: "Pool Pump Speed Capacity"
+      unique_id: pool_pump_capacity_input
+      state_topic: "pool/pump/capacity_pct"
+      command_topic: "pool/pump/set_capacity"
       min: 30
-      max: 100
+      max: 120
       step: 5
       unit_of_measurement: "%"
       mode: slider
@@ -191,6 +203,18 @@ mqtt:
       entity_category: "config"
 
   select:
+    - name: "Pool Pump Mode"
+      unique_id: pool_pump_mode_select
+      command_topic: "pool/pump/set_mode"
+      state_topic: "pool/pump/mode"
+      options:
+        - "Manual Inverter"
+        - "Auto Inverter"
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:tune"
+
     - name: "Solar Controller Mode"
       unique_id: pool_heating_mode_select
       command_topic: "pool/heating/set_mode"
@@ -223,6 +247,15 @@ mqtt:
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:waves"
+
+    - name: "Pool Pump Capacity Sensor"
+      unique_id: pool_pump_capacity_sensor
+      state_topic: "pool/pump/capacity_pct"
+      unit_of_measurement: "%"
+      availability_topic: "pool/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:gauge"
 
     - name: "Pool Pump Energy"
       unique_id: pool_pump_energy
