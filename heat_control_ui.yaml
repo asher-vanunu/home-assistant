@@ -1,5 +1,6 @@
 type: vertical-stack
 cards:
+  # כרטיס תרמוסטט - חוגה משנה צבע לכתום כאשר המשאבה דולקת ומחממת
   - type: thermostat
     entity: climate.khymvm_svlry
     name: ☀️ חימום בריכה סולארי
@@ -9,10 +10,14 @@ cards:
           - 'off'
           - heat
           - auto
+
+  # נתוני חיישנים ובקרה
   - type: entities
-    title: נתוני חיישנים
+    title: נתוני חיישנים ובקרה
     show_header_toggle: false
     entities:
+      - entity: binary_sensor.solar_heating_pump_state
+        name: סטטוס משאבת חימום
       - entity: sensor.collector_temperature
         name: טמפרטורת קולט
         icon: mdi:solar-power
@@ -22,6 +27,8 @@ cards:
       - entity: sensor.flow_temperature
         name: טמפרטורת זרימה
         icon: mdi:pipe-valve
+
+  # הגדרות מתקדמות כולל כפתור גלגל שיניים ליומן הפעילות
   - type: entities
     title: הגדרות מתקדמות
     show_header_toggle: false
@@ -36,6 +43,14 @@ cards:
         name: DT_O (Switch ON temp diff)
       - entity: number.solar_dt_f
         name: DT_F (Switch OFF temp diff)
+      # כפתור גלגל שיניים שפותח חלון קופץ (Popup) עם היסטוריית פעילות המשאבה
+      - type: button
+        name: יומן פעילות משאבה (Activity)
+        icon: mdi:cog-outline
+        action_name: הצג
+        tap_action:
+          action: more-info
+          entity: binary_sensor.solar_heating_pump_state
       - type: button
         name: שמור הגדרות
         icon: mdi:content-save-cog

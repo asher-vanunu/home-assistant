@@ -9,7 +9,24 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
+input_boolean:
+  show_solar_pump_activity:
+    name: "הצג יומן פעילות משאבה"
+    icon: mdi:cog
+
 mqtt:
+  binary_sensor:
+    - name: "Solar Heating Pump State"
+      unique_id: solar_heating_pump_state
+      state_topic: "pool/heating/pump_state"
+      payload_on: "ON"
+      payload_off: "OFF"
+      device_class: running
+      availability_topic: "pool/heating/status"
+      payload_available: "online"
+      payload_not_available: "offline"
+      icon: "mdi:pump"
+
   switch:
     - name: "Pool Pump Power"
       unique_id: pool_pump_power_switch
@@ -84,7 +101,7 @@ mqtt:
       step: 0.5
       unit_of_measurement: "°C"
       mode: slider
-      availability_topic: "pool/status"
+      availability_topic: "pool/heating/status"
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:thermometer-cog"
@@ -99,7 +116,7 @@ mqtt:
       step: 0.5
       unit_of_measurement: "min"
       mode: slider
-      availability_topic: "pool/status"
+      availability_topic: "pool/heating/status"
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:timer-sand"
@@ -114,7 +131,7 @@ mqtt:
       step: 0.5
       unit_of_measurement: "min"
       mode: slider
-      availability_topic: "pool/status"
+      availability_topic: "pool/heating/status"
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:timer-play-outline"
@@ -129,7 +146,7 @@ mqtt:
       step: 0.5
       unit_of_measurement: "min"
       mode: slider
-      availability_topic: "pool/status"
+      availability_topic: "pool/heating/status"
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:timer-stop-outline"
@@ -144,7 +161,7 @@ mqtt:
       step: 0.5
       unit_of_measurement: "°C"
       mode: slider
-      availability_topic: "pool/status"
+      availability_topic: "pool/heating/status"
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:delta"
@@ -159,7 +176,7 @@ mqtt:
       step: 0.5
       unit_of_measurement: "°C"
       mode: slider
-      availability_topic: "pool/status"
+      availability_topic: "pool/heating/status"
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:delta"
@@ -169,7 +186,7 @@ mqtt:
       unique_id: pool_heater_save_config
       command_topic: "pool/heating/save"
       payload_press: "SAVE"
-      availability_topic: "pool/status"
+      availability_topic: "pool/heating/status"
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:content-save-cog"
@@ -178,7 +195,7 @@ mqtt:
       unique_id: pool_heater_reset_defaults
       command_topic: "pool/heating/reset_default"
       payload_press: "RESET"
-      availability_topic: "pool/status"
+      availability_topic: "pool/heating/status"
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:restore"
@@ -223,7 +240,7 @@ mqtt:
         - "AUTO"
         - "MAN_ON"
         - "MAN_OFF"
-      availability_topic: "pool/status"
+      availability_topic: "pool/heating/status"
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:tune"
@@ -274,7 +291,7 @@ mqtt:
       unit_of_measurement: "°C"
       device_class: temperature
       state_class: measurement
-      availability_topic: "pool/status"
+      availability_topic: "pool/heating/status"
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:solar-power"
@@ -285,7 +302,7 @@ mqtt:
       unit_of_measurement: "°C"
       device_class: temperature
       state_class: measurement
-      availability_topic: "pool/status"
+      availability_topic: "pool/heating/status"
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:water-thermometer"
@@ -296,7 +313,7 @@ mqtt:
       unit_of_measurement: "°C"
       device_class: temperature
       state_class: measurement
-      availability_topic: "pool/status"
+      availability_topic: "pool/heating/status"
       payload_available: "online"
       payload_not_available: "offline"
       icon: "mdi:pipe-valve"
@@ -307,13 +324,13 @@ climate:
     unique_id: pool_solar_heater
     min_temp: 20
     max_temp: 40
+    availability_template: "{{ states('sensor.storage_temperature') not in ['unavailable', 'unknown'] }}"
     current_temperature_template: "{{ states('sensor.storage_temperature') | float(0) }}"
     target_temperature_template: "{{ states('number.solar_target_temp_smax') | float(30) }}"
     modes:
       - "off"
       - "heat"
       - "auto"
-      - "shutdown"
     hvac_mode_template: >
       {% set mode = states('select.solar_controller_mode') %}
       {% if mode == 'MAN_ON' %}
@@ -322,6 +339,14 @@ climate:
         off
       {% else %}
         auto
+      {% endif %}
+    hvac_action_template: >
+      {% if is_state('binary_sensor.solar_heating_pump_state', 'on') %}
+        heating
+      {% elif states('select.solar_controller_mode') == 'MAN_OFF' %}
+        off
+      {% else %}
+        idle
       {% endif %}
     set_temperature:
       - service: number.set_value

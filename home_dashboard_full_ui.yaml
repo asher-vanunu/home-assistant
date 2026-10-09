@@ -1,0 +1,523 @@
+button_card_templates:
+  apple_tile:
+    show_state: true
+    show_icon: true
+    aspect_ratio: 1/1
+    tap_action:
+      action: toggle
+    hold_action:
+      action: more-info
+    styles:
+      card:
+        - border-radius: 20px
+        - padding: 12px
+        - transition: all 0.25s ease
+        - background-color: rgba(255, 255, 255, 0.08)
+      grid:
+        - grid-template-areas: '"i circle" "n n" "s s"'
+        - grid-template-columns: 1fr 1fr
+        - grid-template-rows: 1fr min-content min-content
+      icon:
+        - width: 32px
+        - justify-self: start
+        - color: var(--secondary-text-color)
+      name:
+        - justify-self: start
+        - font-weight: 600
+        - font-size: 13px
+        - color: var(--primary-text-color)
+        - margin-top: 6px
+      state:
+        - justify-self: start
+        - font-size: 11px
+        - color: var(--secondary-text-color)
+        - text-transform: capitalize
+      custom_fields:
+        circle:
+          - justify-self: end
+          - font-size: 11px
+          - color: var(--secondary-text-color)
+          - border: 1px solid rgba(255, 255, 255, 0.2)
+          - border-radius: 50%
+          - width: 26px
+          - height: 26px
+          - line-height: 24px
+          - text-align: center
+    state:
+      - value: 'on'
+        styles:
+          card:
+            - background-color: '#e4e6eb'
+          icon:
+            - color: '#f39c12'
+          name:
+            - color: '#1a1a1a'
+          state:
+            - color: '#555555'
+          custom_fields:
+            circle:
+              - color: '#555555'
+              - border: 1px solid rgba(0, 0, 0, 0.2)
+    custom_fields:
+      circle: |
+        [[[
+          if (entity && entity.state === 'on' && entity.attributes && entity.attributes.brightness) {
+            return Math.round((entity.attributes.brightness / 255) * 100) + '%';
+          }
+          return '';
+        ]]]
+views:
+  - title: בית
+    type: sections
+    max_columns: 4
+    cards: []
+    sections:
+      - type: grid
+        cards:
+          - type: custom:mushroom-title-card
+            title: ⚡ פעולות מהירות
+            subtitle: ''
+            card_mod:
+              style: |
+                .title {
+                  font-size: 20px !important;
+                  font-weight: 900 !important;
+                }
+          - type: grid
+            columns: 3
+            square: true
+            cards:
+              - type: custom:button-card
+                entity: script.leaving_home
+                name: יציאה מהבית
+                icon: mdi:home-export-outline
+                aspect_ratio: 1/1
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  target:
+                    entity_id: script.leaving_home
+                hold_action:
+                  action: more-info
+                styles:
+                  card:
+                    - border-radius: 18px
+                    - padding: 12px
+                    - background-color: rgba(255, 255, 255, 0.08)
+                  icon:
+                    - color: '#4a90e2'
+                    - width: 38px
+                  name:
+                    - font-size: 13px
+                    - font-weight: 700
+                    - color: var(--primary-text-color)
+                    - margin-top: 6px
+                show_state: false
+                show_icon: true
+              - type: custom:button-card
+                entity: script.welcome_home
+                name: כניסה הביתה
+                icon: mdi:home-import-outline
+                aspect_ratio: 1/1
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  target:
+                    entity_id: script.welcome_home
+                hold_action:
+                  action: more-info
+                styles:
+                  card:
+                    - border-radius: 18px
+                    - padding: 12px
+                    - background-color: rgba(255, 255, 255, 0.08)
+                  icon:
+                    - color: '#4a90e2'
+                    - width: 38px
+                  name:
+                    - font-size: 13px
+                    - font-weight: 700
+                    - color: var(--primary-text-color)
+                    - margin-top: 6px
+                show_state: false
+                show_icon: true
+              - type: custom:button-card
+                entity: script.twrt_wyrh_1
+                name: תאורת אוירה 1
+                icon: mdi:creation-outline
+                aspect_ratio: 1/1
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  target:
+                    entity_id: script.ambient_lighting_1
+                hold_action:
+                  action: more-info
+                styles:
+                  card:
+                    - border-radius: 18px
+                    - padding: 12px
+                    - background-color: rgba(255, 255, 255, 0.08)
+                  icon:
+                    - color: '#f39c12'
+                    - width: 38px
+                  name:
+                    - font-size: 13px
+                    - font-weight: 700
+                    - color: var(--primary-text-color)
+                    - margin-top: 6px
+                show_state: false
+                show_icon: true
+            grid_options:
+              columns: 9
+              rows: auto
+      - type: grid
+        cards:
+          - type: custom:mushroom-title-card
+            title: 💡 תאורה
+            subtitle: ''
+            card_mod:
+              style: |
+                .title {
+                  font-size: 20px !important;
+                  font-weight: 900 !important;
+                }
+          - type: grid
+            columns: 2
+            square: true
+            cards:
+              - type: custom:button-card
+                entity: light.home_entrence_inside
+                name: כניסה פנים
+                icon: mdi:door-open
+                aspect_ratio: 1/1
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                styles:
+                  card:
+                    - border-radius: 18px
+                    - padding: 12px
+                    - background-color: rgba(255, 255, 255, 0.08)
+                  name:
+                    - font-size: 13px
+                    - font-weight: 600
+                  state:
+                    - font-size: 11px
+                show_state: true
+                show_icon: true
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: '#e4e6eb'
+                      icon:
+                        - color: '#f39c12'
+                      name:
+                        - color: '#1a1a1a'
+                      state:
+                        - color: '#555555'
+              - type: custom:button-card
+                entity: light.home_entrence_outside
+                name: כניסה חוץ
+                icon: mdi:coach-lamp
+                aspect_ratio: 1/1
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                styles:
+                  card:
+                    - border-radius: 18px
+                    - padding: 12px
+                    - background-color: rgba(255, 255, 255, 0.08)
+                  name:
+                    - font-size: 13px
+                    - font-weight: 600
+                  state:
+                    - font-size: 11px
+                show_state: true
+                show_icon: true
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: '#e4e6eb'
+                      icon:
+                        - color: '#f39c12'
+                      name:
+                        - color: '#1a1a1a'
+                      state:
+                        - color: '#555555'
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: grid
+            columns: 2
+            square: true
+            cards:
+              - type: custom:button-card
+                entity: light.leaving_room_main
+                name: סלון ראשי
+                icon: mdi:ceiling-light
+                aspect_ratio: 1/1
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                styles:
+                  card:
+                    - border-radius: 18px
+                    - padding: 12px
+                    - background-color: rgba(255, 255, 255, 0.08)
+                  name:
+                    - font-size: 13px
+                    - font-weight: 600
+                  state:
+                    - font-size: 11px
+                show_state: true
+                show_icon: true
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: '#e4e6eb'
+                      icon:
+                        - color: '#f39c12'
+                      name:
+                        - color: '#1a1a1a'
+                      state:
+                        - color: '#555555'
+              - type: custom:button-card
+                entity: light.living_room_spotlight
+                name: ספוטים סלון
+                icon: mdi:lightbulb-spot
+                aspect_ratio: 1/1
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                styles:
+                  card:
+                    - border-radius: 18px
+                    - padding: 12px
+                    - background-color: rgba(255, 255, 255, 0.08)
+                  name:
+                    - font-size: 13px
+                    - font-weight: 600
+                  state:
+                    - font-size: 11px
+                show_state: true
+                show_icon: true
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: '#e4e6eb'
+                      icon:
+                        - color: '#f39c12'
+                      name:
+                        - color: '#1a1a1a'
+                      state:
+                        - color: '#555555'
+              - type: custom:button-card
+                entity: light.living_room_niche
+                name: אווירה נישה
+                icon: mdi:wall-sconce-flat
+                aspect_ratio: 1/1
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                styles:
+                  card:
+                    - border-radius: 18px
+                    - padding: 12px
+                    - background-color: rgba(255, 255, 255, 0.08)
+                  name:
+                    - font-size: 13px
+                    - font-weight: 600
+                  state:
+                    - font-size: 11px
+                show_state: true
+                show_icon: true
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: '#e4e6eb'
+                      icon:
+                        - color: '#f39c12'
+                      name:
+                        - color: '#1a1a1a'
+                      state:
+                        - color: '#555555'
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: grid
+            columns: 2
+            square: true
+            cards:
+              - type: custom:button-card
+                entity: light.kitchen_main
+                name: מטבח ראשי
+                icon: mdi:ceiling-light-multiple
+                aspect_ratio: 1/1
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                styles:
+                  card:
+                    - border-radius: 18px
+                    - padding: 12px
+                    - background-color: rgba(255, 255, 255, 0.08)
+                  name:
+                    - font-size: 13px
+                    - font-weight: 600
+                  state:
+                    - font-size: 11px
+                show_state: true
+                show_icon: true
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: '#e4e6eb'
+                      icon:
+                        - color: '#f39c12'
+                      name:
+                        - color: '#1a1a1a'
+                      state:
+                        - color: '#555555'
+              - type: custom:button-card
+                entity: light.kitchen_dining_area
+                name: פינת אוכל
+                icon: mdi:silverware-fork-knife
+                aspect_ratio: 1/1
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                styles:
+                  card:
+                    - border-radius: 18px
+                    - padding: 12px
+                    - background-color: rgba(255, 255, 255, 0.08)
+                  name:
+                    - font-size: 13px
+                    - font-weight: 600
+                  state:
+                    - font-size: 11px
+                show_state: true
+                show_icon: true
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: '#e4e6eb'
+                      icon:
+                        - color: '#f39c12'
+                      name:
+                        - color: '#1a1a1a'
+                      state:
+                        - color: '#555555'
+              - type: custom:button-card
+                entity: light.kitchen_spotlight
+                name: ספוטים מטבח
+                icon: mdi:lightbulb-spot
+                aspect_ratio: 1/1
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                styles:
+                  card:
+                    - border-radius: 18px
+                    - padding: 12px
+                    - background-color: rgba(255, 255, 255, 0.08)
+                  name:
+                    - font-size: 13px
+                    - font-weight: 600
+                  state:
+                    - font-size: 11px
+                show_state: true
+                show_icon: true
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: '#e4e6eb'
+                      icon:
+                        - color: '#f39c12'
+                      name:
+                        - color: '#1a1a1a'
+                      state:
+                        - color: '#555555'
+            grid_options:
+              columns: 6
+              rows: auto
+      - type: grid
+        cards:
+          - type: custom:mushroom-title-card
+            title: ❄️ מזגנים
+            subtitle: ''
+            card_mod:
+              style: |
+                .title {
+                  font-size: 20px !important;
+                  font-weight: 900 !important;
+                }
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-climate-card
+                entity: climate.9424b86f1bf2
+                name: חדר עמית
+                show_temperature_control: true
+                hvac_modes:
+                  - 'off'
+                  - cool
+                  - heat
+                  - fan_only
+              - type: custom:mushroom-climate-card
+                entity: climate.9424b86f5e74
+                name: חדר נועם
+                show_temperature_control: true
+                hvac_modes:
+                  - 'off'
+                  - cool
+                  - heat
+                  - fan_only
+            grid_options:
+              columns: 12
+              rows: auto
+          - type: horizontal-stack
+            cards:
+              - type: custom:mushroom-climate-card
+                entity: climate.9424b88023c1
+                name: חדר הורים
+                show_temperature_control: true
+                hvac_modes:
+                  - 'off'
+                  - cool
+                  - heat
+                  - fan_only
+            grid_options:
+              columns: 6
+              rows: auto
+      - type: grid
+        cards:
+          - type: custom:mushroom-title-card
+            title: 🔆 מזג אויר
+            subtitle: ''
+            card_mod:
+              style: |
+                .title {
+                  font-size: 20px !important;
+                  font-weight: 900 !important;
+                }
+          - type: weather-forecast
+            entity: weather.forecast_home
+            forecast_type: daily
