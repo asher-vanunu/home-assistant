@@ -58,6 +58,16 @@ button_card_templates:
             circle:
               - color: '#555555'
               - border: 1px solid rgba(0, 0, 0, 0.2)
+      - value: open
+        styles:
+          card:
+            - background-color: '#e4e6eb'
+          icon:
+            - color: '#2980b9'
+          name:
+            - color: '#1a1a1a'
+          state:
+            - color: '#555555'
     custom_fields:
       circle: |
         [[[
@@ -183,7 +193,7 @@ views:
                   font-weight: 900 !important;
                 }
           - type: grid
-            columns: 2
+            columns: 4
             square: true
             cards:
               - type: custom:button-card
@@ -250,13 +260,6 @@ views:
                         - color: '#1a1a1a'
                       state:
                         - color: '#555555'
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: grid
-            columns: 2
-            square: true
-            cards:
               - type: custom:button-card
                 entity: light.leaving_room_main
                 name: סלון ראשי
@@ -353,13 +356,6 @@ views:
                         - color: '#1a1a1a'
                       state:
                         - color: '#555555'
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: grid
-            columns: 2
-            square: true
-            cards:
               - type: custom:button-card
                 entity: light.kitchen_main
                 name: מטבח ראשי
@@ -457,7 +453,7 @@ views:
                       state:
                         - color: '#555555'
             grid_options:
-              columns: 6
+              columns: 12
               rows: auto
       - type: grid
         cards:
@@ -471,7 +467,7 @@ views:
                   font-weight: 900 !important;
                 }
           - type: grid
-            columns: 2
+            columns: 4
             square: true
             cards:
               - type: custom:button-card
@@ -538,13 +534,6 @@ views:
                         - color: '#1a1a1a'
                       state:
                         - color: '#555555'
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: grid
-            columns: 2
-            square: true
-            cards:
               - type: custom:button-card
                 entity: cover.kitchen_side
                 name: מטבח צד
@@ -609,13 +598,6 @@ views:
                         - color: '#1a1a1a'
                       state:
                         - color: '#555555'
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: grid
-            columns: 2
-            square: true
-            cards:
               - type: custom:button-card
                 entity: cover.perents_left
                 name: הורים שמאל
@@ -680,13 +662,6 @@ views:
                         - color: '#1a1a1a'
                       state:
                         - color: '#555555'
-            grid_options:
-              columns: 6
-              rows: auto
-          - type: grid
-            columns: 2
-            square: true
-            cards:
               - type: custom:button-card
                 entity: cover.amit
                 name: תריס עמית
@@ -752,7 +727,7 @@ views:
                       state:
                         - color: '#555555'
             grid_options:
-              columns: 6
+              columns: 12
               rows: auto
       - type: grid
         cards:
